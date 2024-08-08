@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "600392959268",
+    "project_id": "al-sadiqa",
+    "storage_bucket": "al-sadiqa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600392959268:android:7d5eec300740743912dfb1",
+        "android_client_info": {
+          "package_name": "com.app.siddique"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV7f-RDzyKfiq9NUmtaOWA3XNhFaln4Fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
