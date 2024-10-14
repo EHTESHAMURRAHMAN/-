@@ -10,18 +10,16 @@ import 'package:siddique/app_binding.dart';
 import 'package:siddique/di.dart';
 
 bool isLocalAuth = false;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DenpendencyInjection.init();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-    apiKey: 'AIzaSyDV7f-RDzyKfiq9NUmtaOWA3XNhFaln4Fo',
-    appId: '1:600392959268:android:7d5eec300740743912dfb1',
-    messagingSenderId: '600392959268',
-    projectId: 'al-sadiqa',
-    storageBucket: 'al-sadiqa.appspot.com',
-  ));
+          apiKey: 'AIzaSyDV7f-RDzyKfiq9NUmtaOWA3XNhFaln4Fo',
+          appId: '1:600392959268:android:7d5eec300740743912dfb1',
+          messagingSenderId: '600392959268',
+          projectId: 'al-sadiqa',
+          storageBucket: 'al-sadiqa.appspot.com'));
   runApp(const MyApp());
 }
 
@@ -31,7 +29,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppController themeController = Get.put(AppController());
-
     return OverlaySupport.global(child: Obx(() {
       return GetMaterialApp(
           builder: EasyLoading.init(),

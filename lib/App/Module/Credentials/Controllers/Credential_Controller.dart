@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rive/rive.dart';
+import 'package:siddique/App/Module/route/app_pages.dart';
 
 class CredentialController extends GetxController {
-  final validEmail = "khan";
-  final validPassword = "1234";
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  /// Input form controllers
+  var passwordInVisible = true.obs;
+  var showLoading = false.obs;
+
+  //* State Machine Input -> SMI Input bool to trigger actions
+  SMIInput<bool>? trigSuccess;
+  SMIInput<bool>? trigFail;
+
+  //* SMI Bool for eyes
+  SMIInput<bool>? isChecking;
+  SMIInput<bool>? isHandsUp;
+
+  //* SMI for numbers of chars in textfield
+  SMIInput<double>? lookAtNumber;
+
+  //* Art Board
+  Artboard? artboard;
+
+  //* State Machine Controller
+  late StateMachineController? controller;
+
   FocusNode emailFocusNode = FocusNode();
-  TextEditingController emailController = TextEditingController();
-
   FocusNode passwordFocusNode = FocusNode();
-  TextEditingController passwordController = TextEditingController();
-
-  /// Rive controller and input
-  StateMachineController? riveController;
-
-  Rx<SMIInput<bool>?> isChecking = Rx<SMIInput<bool>?>(null);
-  Rx<SMIInput<double>?> numLook = Rx<SMIInput<double>?>(null);
-  Rx<SMIInput<bool>?> isHandsUp = Rx<SMIInput<bool>?>(null);
-  Rx<SMIInput<bool>?> trigSuccess = Rx<SMIInput<bool>?>(null);
-  Rx<SMIInput<bool>?> trigFail = Rx<SMIInput<bool>?>(null);
-
-  RxBool showPassword = false.obs;
 
   @override
   void onInit() {
@@ -35,74 +41,32 @@ class CredentialController extends GetxController {
   void onClose() {
     emailFocusNode.removeListener(emailFocus);
     passwordFocusNode.removeListener(passwordFocus);
-    emailFocusNode.dispose();
-    passwordFocusNode.dispose();
-    emailController.dispose();
-    passwordController.dispose();
     super.onClose();
   }
 
   void emailFocus() {
-    isChecking.value?.change(emailFocusNode.hasFocus);
+    isChecking?.change(emailFocusNode.hasFocus);
   }
 
   void passwordFocus() {
-    isHandsUp.value?.change(passwordFocusNode.hasFocus);
+    isHandsUp?.change(passwordFocusNode.hasFocus);
   }
 
-  Future<void> login() async {
+  void login() async {
     emailFocusNode.unfocus();
     passwordFocusNode.unfocus();
-
-    final email = emailController.text;
-    final password = passwordController.text;
-
-    Get.dialog(
-      WillPopScope(
-        onWillPop: () async => false,
-        child: Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 32),
-                child: CircularProgressIndicator(),
-              ),
-            ],
-          ),
-        ),
-      ),
-      barrierDismissible: false,
-    );
-
+    showLoading.value = true;
+    //* delay by 2s
     await Future.delayed(
-      const Duration(milliseconds: 2000),
+      const Duration(seconds: 2),
     );
+    showLoading.value = false;
 
-    Get.back();
-
-    if (email == validEmail && password == validPassword) {
-      trigSuccess.value?.change(true);
+    if (emailController.text == '123' && passwordController.text == "123") {
+      trigSuccess?.change(true);
+      Get.toNamed(Routes.DASHBOARD);
     } else {
-      trigFail.value?.change(true);
+      trigFail?.change(true);
     }
-  }
-
-  void onRiveInit(Artboard artboard) {
-    riveController = StateMachineController.fromArtboard(
-      artboard,
-      "Login Machine",
-    );
-    if (riveController == null) return;
-
-    artboard.addController(riveController!);
-    isChecking.value = riveController?.findInput("isChecking");
-    numLook.value = riveController?.findInput("numLook");
-    isHandsUp.value = riveController?.findInput("isHandsUp");
-    trigSuccess.value = riveController?.findInput("trigSuccess");
-    trigFail.value = riveController?.findInput("trigFail");
   }
 }

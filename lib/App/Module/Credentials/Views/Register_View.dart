@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rive/rive.dart';
 import 'package:siddique/App/Module/Credentials/Controllers/Credential_Controller.dart';
+import 'package:siddique/App/Module/Credentials/Views/Login_view.dart';
 import 'package:siddique/App/Module/route/app_pages.dart';
 import 'package:siddique/App/Utils/Common_Color.dart';
 
@@ -18,10 +18,11 @@ class RegistrationView extends GetView<CredentialController> {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
+            SingleChildScrollView(
+              child: Expanded(
+                child: ListView(
                   children: [
+                    const LightingEffectContainer(),
                     const SizedBox(height: 32),
                     Text(
                       'Register'.tr,
@@ -32,21 +33,6 @@ class RegistrationView extends GetView<CredentialController> {
                       ),
                     ),
                     const SizedBox(height: 32),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(125)),
-                      height: 150,
-                      width: 150,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(125),
-                        child: RiveAnimation.asset(
-                          "assets/login-teddy.riv",
-                          fit: BoxFit.fitHeight,
-                          stateMachines: const ["Login Machine"],
-                          onInit: controller.onRiveInit,
-                        ),
-                      ),
-                    ),
                     const SizedBox(height: 50),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
@@ -56,22 +42,20 @@ class RegistrationView extends GetView<CredentialController> {
                         filled: true,
                         fillColor: Colors.grey[200],
                         prefixIcon:
-                            Icon(Icons.person, color: Colors.deepPurple),
+                            const Icon(Icons.person, color: Colors.deepPurple),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide.none,
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                         ),
                         hintText: "Name",
                       ),
                       style: Theme.of(context).textTheme.bodyMedium,
-                      onChanged: (value) {
-                        controller.numLook.value
-                            ?.change(value.length.toDouble());
-                      },
+                      onChanged: (value) {},
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
@@ -94,10 +78,7 @@ class RegistrationView extends GetView<CredentialController> {
                         hintText: "Phone",
                       ),
                       style: Theme.of(context).textTheme.bodyMedium,
-                      onChanged: (value) {
-                        controller.numLook.value
-                            ?.change(value.length.toDouble());
-                      },
+                      onChanged: (value) {},
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
@@ -120,10 +101,7 @@ class RegistrationView extends GetView<CredentialController> {
                         hintText: "Email",
                       ),
                       style: Theme.of(context).textTheme.bodyMedium,
-                      onChanged: (value) {
-                        controller.numLook.value
-                            ?.change(value.length.toDouble());
-                      },
+                      onChanged: (value) {},
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
@@ -132,14 +110,14 @@ class RegistrationView extends GetView<CredentialController> {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.grey[200],
-                        prefixIcon: Icon(Icons.key, color: Colors.brown),
+                        prefixIcon: const Icon(Icons.key, color: Colors.brown),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide.none,
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(color: Colors.brown),
+                          borderSide: const BorderSide(color: Colors.brown),
                         ),
                         hintText: "Password",
                       ),
