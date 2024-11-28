@@ -60,7 +60,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.REGISTER,
-      page: () => const RegistrationView(),
+      page: () => RegistrationView(),
       binding: CredentialBindings(),
     ),
   ];
